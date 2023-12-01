@@ -2,13 +2,15 @@ import assert from 'assert'
 import * as fs from 'fs'
 import * as path from 'path'
 
-export function readInputFileLines<T>(dirname: string, parser: (line: string, i: number) => T): T[] {
-    const data = fs.readFileSync(
-      path.join(dirname, '..', 'input.txt'),
-      { encoding: 'utf8' }
-    ).split('\n')
+export function readInputFileLines<T>(
+  dirname: string,
+  parser: (line: string, i: number) => T
+): T[] {
+  const data = fs
+    .readFileSync(path.join(dirname, '..', 'input.txt'), { encoding: 'utf8' })
+    .split('\n')
 
-    return data.map(parser)
+  return data.map(parser)
 }
 
 /** Increments the value associated with `key` in `map` by `value`. */
@@ -35,7 +37,13 @@ export interface AStarParams<K> {
 }
 
 /** Generic implementation of A* search algorithm over a graph of nodes identified by values of type `K`. */
-export function aStarSearch<K>({ start, isEnd, getDistance, getWeight, getNeighbours }: AStarParams<K>): K[] {
+export function aStarSearch<K>({
+  start,
+  isEnd,
+  getDistance,
+  getWeight,
+  getNeighbours,
+}: AStarParams<K>): K[] {
   let openSet: K[] = [start]
   const cameFrom = new Map<K, K>()
   const gScores = new Map<K, number>([[start, getWeight(start)]])
@@ -44,10 +52,12 @@ export function aStarSearch<K>({ start, isEnd, getDistance, getWeight, getNeighb
   // While there are more nodes to visit...
   while (openSet.length > 0) {
     // Get element from openSet with lowest risk and closest distance.
-    let current = openSet.reduce((prev, curr) => fScores.get(prev)! < fScores.get(curr)! ? prev : curr)
+    let current = openSet.reduce((prev, curr) =>
+      fScores.get(prev)! < fScores.get(curr)! ? prev : curr
+    )
 
     // Remove current from the open set.
-    openSet = openSet.filter(x => x != current)
+    openSet = openSet.filter((x) => x != current)
 
     // If we made it to the end...
     if (isEnd(current)) {
