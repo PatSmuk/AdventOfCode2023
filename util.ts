@@ -2,6 +2,20 @@ import assert from 'assert'
 import * as fs from 'fs'
 import * as path from 'path'
 
+export function* range(start: number, end: number): Generator<number> {
+  for (let i = start; i < end; i++) {
+    yield i
+  }
+}
+
+export function* each<T>(iterable: Iterable<T>): Generator<[T, number]> {
+  let i = 0
+  for (const item of iterable) {
+    yield [item, i]
+    i++
+  }
+}
+
 export function readInputFileLines<T>(
   dirname: string,
   parser: (line: string, i: number) => T

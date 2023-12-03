@@ -1,4 +1,4 @@
-import { readInputFileLines } from '../../util'
+import { range, readInputFileLines } from '../../util'
 
 const PART_NUMBER_PATTERN = /\d+/g
 const SEARCH_DIRECTIONS: [number, number][] = [
@@ -22,7 +22,7 @@ function parseLine(line: string) {
   }
 
   const partNums = [...line.matchAll(PART_NUMBER_PATTERN)].map((match) => ({
-    partNumber: match[0],
+    partNum: match[0],
     startIndex: match.index!,
   }))
 
@@ -33,10 +33,10 @@ const inputs = readInputFileLines(__dirname, parseLine)
 
 // Create a map from coordinates to the part number at that location (if any)
 const partNumLocations = new Map<string, number>()
-for (let row = 0; row < inputs.length; row++) {
-  for (const { partNumber, startIndex } of inputs[row].partNums) {
-    for (let col = startIndex; col < startIndex + partNumber.length; col++) {
-      partNumLocations.set(`${row},${col}`, parseInt(partNumber))
+for (const row of range(0, inputs.length)) {
+  for (const { partNum, startIndex } of inputs[row].partNums) {
+    for (const col of range(startIndex, startIndex + partNum.length)) {
+      partNumLocations.set(`${row},${col}`, parseInt(partNum))
     }
   }
 }
@@ -44,7 +44,7 @@ for (let row = 0; row < inputs.length; row++) {
 let sum = 0
 
 // For each gear of each row...
-for (let row = 0; row < inputs.length; row++) {
+for (const row of range(0, inputs.length)) {
   for (const gearCol of inputs[row].gearCols) {
     const nearbyPartNum = new Set<number>()
 
