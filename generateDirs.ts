@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync, existsSync } from 'fs'
 
-const INITIAL_CODE = `import { readInputFileLines } from '../../util'
+const INITIAL_CODE = `import { each, range, readInputFileLines } from '../../util'
 
 function parseLine(line: string) {
   return line
@@ -24,9 +24,18 @@ for (let i = 1; i <= 25; i++) {
     mkdirSync(`${dir}/p2`)
   } catch (err) {}
 
-  writeFileSync(`${dir}/input.txt`, '', { flag: 'a' })
-  if (!existsSync(`${dir}/p1/index.ts`))
-    writeFileSync(`${dir}/p1/index.ts`, INITIAL_CODE, { flag: 'a' })
-  if (!existsSync(`${dir}/p2/index.ts`))
-    writeFileSync(`${dir}/p2/index.ts`, INITIAL_CODE, { flag: 'a' })
+  if (!existsSync(`${dir}/input.txt`)) {
+    console.log(`creating ${dir}/input.txt`)
+    writeFileSync(`${dir}/input.txt`, '')
+  }
+
+  if (!existsSync(`${dir}/p1/index.ts`)) {
+    console.log(`creating ${dir}/p1/index.ts`)
+    writeFileSync(`${dir}/p1/index.ts`, INITIAL_CODE)
+  }
+
+  if (!existsSync(`${dir}/p2/index.ts`)) {
+    console.log(`creating ${dir}/p2/index.ts`)
+    writeFileSync(`${dir}/p2/index.ts`, INITIAL_CODE)
+  }
 }

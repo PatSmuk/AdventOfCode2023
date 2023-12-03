@@ -1,4 +1,4 @@
-import { readInputFileLines } from '../../util'
+import { each, range, readInputFileLines } from '../../util'
 
 function parseLine(line: string) {
   return line
