@@ -29,12 +29,7 @@ export function readInputFileLines<T>(
 
 /** Increments the value associated with `key` in `map` by `value`. */
 export function mapInc<K>(map: Map<K, number>, key: K, value: number) {
-  const existing = map.get(key)
-  if (existing) {
-    map.set(key, existing + value)
-  } else {
-    map.set(key, value)
-  }
+  map.set(key, (map.get(key) ?? 0) + value)
 }
 
 export interface AStarParams<K> {
