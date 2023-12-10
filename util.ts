@@ -2,6 +2,22 @@ import assert from 'assert'
 import * as fs from 'fs'
 import * as path from 'path'
 
+export function primeFactors(n: number) {
+  const factors = []
+  let divisor = 2
+
+  while (n >= 2) {
+    if (n % divisor == 0) {
+      factors.push(divisor)
+      n = n / divisor
+    } else {
+      divisor++
+    }
+  }
+
+  return factors
+}
+
 export function* range(start: number, end: number): Generator<number> {
   for (let i = start; i < end; i++) {
     yield i
