@@ -130,10 +130,11 @@ export class Coord {
   constructor(x: number, y: number)
   constructor(xOrString: number | string, y?: number) {
     if (typeof xOrString === 'number') {
-      assert(y)
+      assert(typeof y === 'number')
       this.x = xOrString
       this.y = y
     } else {
+      assert(typeof xOrString === 'string')
       const [l, r] = xOrString.split(',')
       this.x = parseInt(l)
       this.y = parseInt(r)
@@ -150,7 +151,7 @@ export class Coord {
   add(dx: number, dy: number): void
   add(coordOrDx: Coord | number, dy?: number): void {
     if (typeof coordOrDx === 'number') {
-      assert(dy)
+      assert(typeof dy === 'number')
       this.x += coordOrDx
       this.y += dy
     } else {
