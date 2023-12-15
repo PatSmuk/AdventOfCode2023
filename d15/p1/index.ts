@@ -1,8 +1,17 @@
-import { each, range, readInputFileLines } from '../../util'
+import { readInputFileLines } from '../../util'
 
-function parseLine(line: string) {
-  return line
+const strings = readInputFileLines(__dirname, (line) => line.split(','))[0]
+
+let sum = 0
+for (const string of strings) {
+  let hash = 0
+
+  for (const char of string) {
+    hash += char.charCodeAt(0)
+    hash *= 17
+    hash %= 256
+  }
+  sum += hash
 }
 
-const inputs = readInputFileLines(__dirname, parseLine)
-console.log(JSON.stringify(inputs, null, 2))
+console.log(sum)
