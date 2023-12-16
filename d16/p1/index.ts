@@ -1,8 +1,13 @@
-import { each, range, readInputFileLines } from '../../util'
+import { each, readInputFileLines } from '../../util'
+import { Tile, findTotalEnergizedTiles } from '../util'
 
-function parseLine(line: string) {
-  return line
+const inputs = readInputFileLines(__dirname, (line) => line)
+const grid = new Map<string, Tile>()
+
+for (const [row, y] of each(inputs)) {
+  for (const [char, x] of each(row)) {
+    grid.set(`${x},${y}`, char as Tile)
+  }
 }
 
-const inputs = readInputFileLines(__dirname, parseLine)
-console.log(JSON.stringify(inputs, null, 2))
+console.log(findTotalEnergizedTiles(grid, 0, 0, 'r'))
