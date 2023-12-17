@@ -77,12 +77,18 @@ export function aStarSearch<K>({
   // While there are more nodes to visit...
   while (openSet.length > 0) {
     // Get element from openSet with lowest risk and closest distance.
-    let current = openSet.reduce((prev, curr) =>
-      fScores.get(prev)! < fScores.get(curr)! ? prev : curr
-    )
+    let minFScore = fScores.get(openSet[0])!
+    let currentIndex = 0
+    for (let i = 1; i < openSet.length; i++) {
+      const score = fScores.get(openSet[i])!
+      if (score < minFScore) {
+        minFScore = score
+        currentIndex = i
+      }
+    }
 
     // Remove current from the open set.
-    openSet = openSet.filter((x) => x != current)
+    let current = openSet.splice(currentIndex, 1)[0]
 
     // If we made it to the end...
     if (isEnd(current)) {
